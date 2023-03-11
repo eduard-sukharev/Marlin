@@ -40,6 +40,11 @@
 #include "SdBaseFile.h"
 
 #include "../MarlinCore.h"
+
+#define DEBUG_OUT ENABLED(MARLIN_DEV_MODE)
+#include "../core/debug_out.h"
+#include "../libs/hex_print.h"
+
 SdBaseFile *SdBaseFile::cwd_ = 0;   // Pointer to Current Working Directory
 
 // callback function for date/time
@@ -631,11 +636,15 @@ bool SdBaseFile::open(SdBaseFile *dirFile, const uint8_t dname[11]
     OPTARG(LONG_FILENAME_WRITE_SUPPORT, const uint8_t dlname[LONG_FILENAME_LENGTH])
   , uint8_t oflag
 ) {
+  DEBUG_SECTION(SBileOpen, "SdBaseFile::open()", true);
+  DEBUG_ECHOLNPGM_P(" dname: ", (char *)dname);
+
   bool emptyFound = false, fileFound = false;
   uint8_t index = 0;
   dir_t *p;
 
   #if ENABLED(LONG_FILENAME_WRITE_SUPPORT)
+    // DEBUG_ECHOLN("LONG_FILENAME_WRITE_SUPPORT");
     // LFN - Long File Name support
     const bool useLFN = dlname[0] != 0;
     bool lfnFileFound = false;
@@ -647,6 +656,7 @@ bool SdBaseFile::open(SdBaseFile *dirFile, const uint8_t dname[11]
             lfnName[LONG_FILENAME_LENGTH],
             lfnSequenceNumber = 0,
             lfnChecksum = 0;
+    DEBUG_ECHOLNPGM(" reqEntriesNum: ", reqEntriesNum, " lfnNameLength: ", lfnNameLength);
   #endif
 
   // Rewind this dir
@@ -654,15 +664,25 @@ bool SdBaseFile::open(SdBaseFile *dirFile, const uint8_t dname[11]
   dirFile->rewind();
 
   // search for file
+  DEBUG_ECHOLN(" search for file");
   while (dirFile->curPosition_ < dirFile->fileSize_) {
     // Get absolute index position
     index = (dirFile->curPosition_ >> 5) IF_DISABLED(LONG_FILENAME_WRITE_SUPPORT, & 0x0F);
 
+    dirFile->printName();
+    DEBUG_ECHOLNPGM("  absolute index position: ", index);
+
     // Get next entry
-    if (!(p = dirFile->readDirCache())) return false;
+    if (!(p = dirFile->readDirCache())) {
+      DEBUG_ECHOLN("  readDirCache() -> false");
+      return false;
+    }
+    DEBUG_ECHOLNPGM_P("  p->name: ", (char *)(p->name));
 
     // Check empty status: Is entry empty?
+    DEBUG_ECHO("  Check empty status: ");
     if (p->name[0] == DIR_NAME_FREE || p->name[0] == DIR_NAME_DELETED) {
+      DEBUG_ECHOLN("Entry empty");
       // Count the contiguous available entries in which (eventually) fit the new dir entry, if it's a write operation
       if (!emptyFound) {
         #if ENABLED(LONG_FILENAME_WRITE_SUPPORT)
@@ -684,40 +704,54 @@ bool SdBaseFile::open(SdBaseFile *dirFile, const uint8_t dname[11]
       if (p->name[0] == DIR_NAME_FREE) break;
     }
     else {  // Entry not empty
+      DEBUG_ECHOLN("Entry not empty");
       #if ENABLED(LONG_FILENAME_WRITE_SUPPORT)
         // Reset empty counter
+        DEBUG_ECHOLN("    Reset empty counter");
         if (!emptyFound) emptyCount = 0;
         // Search for SFN or LFN?
+        DEBUG_ECHOLN("    Search for SFN or LFN?");
         if (!useLFN) {
+          DEBUG_ECHOLN("     !useLFN");
           // Check using SFN: file found?
           if (!memcmp(dname, p->name, 11)) {
             fileFound = true;
+            DEBUG_ECHOLNPGM("      fileFound: ", fileFound);
             break;
           }
         }
         else {
+          DEBUG_ECHOLN("     useLFN");
           // Check using LFN: LFN not found? continue search for LFN
           if (!lfnFileFound) {
+            DEBUG_ECHOLN("      !lfnFileFound");
             // Is this dir a LFN?
             if (isDirLFN(p)) {
+              DEBUG_ECHOLN("       isDirLFN(p)");
               // Get VFat dir entry
               pvFat = (vfat_t *) p;
               // Get checksum from the last entry of the sequence
               if (pvFat->sequenceNumber & 0x40) lfnChecksum = pvFat->checksum;
               // Get LFN sequence number
               lfnSequenceNumber = pvFat->sequenceNumber & 0x1F;
+              DEBUG_ECHOLNPGM("       lfnSequenceNumber: ", lfnSequenceNumber);
               if WITHIN(lfnSequenceNumber, 1, reqEntriesNum) {
                 // Check checksum for all other entries with the starting checksum fetched before
+                DEBUG_ECHOLN("        Check checksum for all other entries with the starting checksum fetched before");
                 if (lfnChecksum == pvFat->checksum) {
                   // Set chunk of LFN from VFAT entry into lfnName
+                  DEBUG_ECHOLN("         Set chunk of LFN from VFAT entry into lfnName");
                   getLFNName(pvFat, (char *)lfnName, lfnSequenceNumber);
                   // LFN found?
+                  DEBUG_ECHO("         LFN found?: ");
                   if (!strncasecmp((char*)dlname, (char*)lfnName, lfnNameLength)) lfnFileFound = true;
+                  DEBUG_ECHOLNPGM("         lfnFileFound: ", lfnFileFound);
                 }
               }
             }
           }
           else {    // Complete LFN found, check for related SFN
+            DEBUG_ECHOLN("      Complete LFN found, check for related SFN");
             // Check if only the SFN checksum match because the filename may be different due to different truncation methods
             if (!isDirLFN(p) && (lfnChecksum == lfn_checksum(p->name))) {
               fileFound = true;
