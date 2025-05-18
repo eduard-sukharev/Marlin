@@ -2321,13 +2321,53 @@
 
   //#define BABYSTEP_DISPLAY_TOTAL          // Display total babysteps since last G28
 
-  //#define BABYSTEP_ZPROBE_OFFSET          // Combine M851 Z and Babystepping
+  #define BABYSTEP_ZPROBE_OFFSET            // Combine M851 Z and Babystepping
   #if ENABLED(BABYSTEP_ZPROBE_OFFSET)
     //#define BABYSTEP_HOTEND_Z_OFFSET      // For multiple hotends, babystep relative Z offsets
     //#define BABYSTEP_GFX_OVERLAY          // Enable graphical overlay on Z-offset editor
   #endif
 #endif
 
+// Enable obtain the Z offset value
+
+// #define USE_AUTOZ_TOOL
+#if ENABLED(USE_AUTOZ_TOOL) // One-click calibration high method one
+  #define AUTOZ_TOOL_X    27 //32.5 - X_MIN_POS // The distance between the center of the AUTOZ tool sensing area and the X direction of the nozzle is mm
+  #define AUTOZ_TOOL_Y    28 //32.5 - Y_MIN_POS // The distance between the center of the AUTOZ tool sensing area and the Y direction of the nozzle is mm
+  #define AUTOZ_TOOL_Z    -5
+  #define TOOL_BRUSH_X    -5 // The x-direction difference between the center of the induction area and the center of the brush
+  #define TOOL_BRUSH_Y    50 // The y-direction difference between the center of the induction area and the center of the brush
+  #define AUTOZ_BRUSH_X   (AUTOZ_TOOL_X + TOOL_BRUSH_X)
+  #define AUTOZ_BRUSH_Y   (AUTOZ_TOOL_Y + TOOL_BRUSH_Y)
+  #define AUTOZ_BRUSH_Z   0
+  #define AUTOZ_BRUSH_W   6.0 // Nozzle brush size
+  #define AUTOZ_BRUSH_H   6.0
+  #define BETWEEN_Z         6 // Safe distance from brush or automatic Z offset to tool sensing area
+  #define AUTOTOOL_RESULT // debug CRTouch probe info
+  #define AUTOTOOL_PRINT
+#endif
+
+#define USE_AUTOZ_TOOL_2  // One-click calibration high method two
+#if ENABLED(USE_AUTOZ_TOOL_2)  //20 31
+  #if ENABLED(PLATFORM_OFFSET)
+    #define AUTOZ_TOOL_X    25 //31 + X_MIN_POS // The distance between the center of the AUTOZ tool sensing area and the X direction of the nozzle is mm
+    #define AUTOZ_TOOL_Y    28 //35 + Y_MIN_POS // The distance between the center of the AUTOZ tool sensing area and the Y direction of the nozzle is mm
+  #else
+    #define AUTOZ_TOOL_X    (31 + X_MIN_POS) // The distance between the center of the AUTOZ tool sensing area and the X direction of the nozzle is mm
+    #define AUTOZ_TOOL_Y    (35 + Y_MIN_POS)
+  #endif
+  #define AUTOZ_TOOL_Z    -5
+  #define TOOL_BRUSH_X    -5 // The x-direction difference between the center of the induction area and the center of the brush
+  #define TOOL_BRUSH_Y    50 // The y-direction difference between the center of the induction area and the center of the brush
+  #define AUTOZ_BRUSH_X   (AUTOZ_TOOL_X + TOOL_BRUSH_X)
+  #define AUTOZ_BRUSH_Y   (AUTOZ_TOOL_Y + TOOL_BRUSH_Y)
+  #define AUTOZ_BRUSH_Z   0
+  #define AUTOZ_BRUSH_W   6.0 // Nozzle brush size
+  #define AUTOZ_BRUSH_H   6.0
+  #define BETWEEN_Z         6 // Safe distance from brush or automatic Z offset to tool sensing area
+  #define AUTOTOOL_RESULT // debug CRTouch probe info
+  #define AUTOTOOL_PRINT
+#endif
 // @section extruder
 
 /**

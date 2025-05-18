@@ -765,7 +765,7 @@ namespace LanguageNarrow_de {
 
 namespace LanguageWide_de {
   using namespace LanguageNarrow_de;
-  #if LCD_WIDTH >= 20 || HAS_DWIN_E3V2
+  #if LCD_WIDTH >= 20 || HAS_DWIN_E3V2 || HAS_DWIN_E3V3SE
     LSTR MSG_MEDIA_NOT_INSERTED           = _UxGT("Kein Medium eingelegt.");      // ProUI
     LSTR MSG_PLEASE_WAIT_REBOOT           = _UxGT("Bitte auf Neustart warten.");  // ProUI
     LSTR MSG_PLEASE_PREHEAT               = _UxGT("Bitte das Hotend vorheizen."); // ProUI

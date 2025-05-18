@@ -62,6 +62,8 @@
   #include "../../lcd/extui/ui_api.h"
 #elif ENABLED(DWIN_CREALITY_LCD)
   #include "../../lcd/e3v2/creality/dwin.h"
+#elif ENABLED(DWIN_CREALITY_E3V3SE_LCD)
+  #include "../../lcd/e3v3se/creality/dwin.h"
 #elif ENABLED(SOVOL_SV06_RTS)
   #include "../../lcd/sovol_rts/sovol_rts.h"
 #endif
@@ -255,6 +257,7 @@ void GcodeSuite::G28() {
   #endif
 
   TERN_(DWIN_CREALITY_LCD, dwinHomingStart());
+  TERN_(DWIN_CREALITY_E3V3SE_LCD, dwinHomingStart());
   TERN_(EXTENSIBLE_UI, ExtUI::onHomingStart());
 
   planner.synchronize();          // Wait for planner moves to finish!
@@ -578,6 +581,7 @@ void GcodeSuite::G28() {
 
   TERN_(SOVOL_SV06_RTS, RTS_MoveAxisHoming());
   TERN_(DWIN_CREALITY_LCD, dwinHomingDone());
+  TERN_(DWIN_CREALITY_E3V3SE_LCD, dwinHomingDone());
   TERN_(EXTENSIBLE_UI, ExtUI::onHomingDone());
 
   report_current_position();

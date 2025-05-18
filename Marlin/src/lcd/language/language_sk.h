@@ -803,7 +803,7 @@ namespace LanguageNarrow_sk {
 
 namespace LanguageWide_sk {
   using namespace LanguageNarrow_sk;
-  #if LCD_WIDTH >= 20 || HAS_DWIN_E3V2
+  #if LCD_WIDTH >= 20 || HAS_DWIN_E3V2 || HAS_DWIN_E3V3SE
     LSTR MSG_HOST_START_PRINT             = _UxGT("Spustiť z hosta");
     LSTR MSG_PRINTING_OBJECT              = _UxGT("Tlačím objekt");
     LSTR MSG_CANCEL_OBJECT                = _UxGT("Zrušiť objekt");

@@ -827,7 +827,7 @@ namespace LanguageNarrow_ru {
 
 namespace LanguageWide_ru {
   using namespace LanguageNarrow_ru;
-  #if LCD_WIDTH >= 20 || HAS_DWIN_E3V2
+  #if LCD_WIDTH >= 20 || HAS_DWIN_E3V2 || HAS_DWIN_E3V3SE
     LSTR MSG_MEDIA_INIT_FAIL                = _UxGT("Сбой инициализации SD");
     LSTR MSG_ADVANCED_SETTINGS              = _UxGT("Расширенные настройки");
     LSTR MSG_KILL_SUBCALL_OVERFLOW          = _UxGT("Переполнение вызова");

@@ -206,7 +206,7 @@ namespace LanguageNarrow_el_gr {
 
 namespace LanguageWide_el_gr {
   using namespace LanguageNarrow_el_gr;
-  #if LCD_WIDTH >= 20 || HAS_DWIN_E3V2
+  #if LCD_WIDTH >= 20 || HAS_DWIN_E3V2 || HAS_DWIN_E3V3SE
   #endif
 }
 

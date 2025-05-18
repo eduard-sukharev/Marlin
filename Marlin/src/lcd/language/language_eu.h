@@ -314,7 +314,7 @@ namespace LanguageNarrow_eu {
 
 namespace LanguageWide_eu {
   using namespace LanguageNarrow_eu;
-  #if LCD_WIDTH >= 20 || HAS_DWIN_E3V2
+  #if LCD_WIDTH >= 20 || HAS_DWIN_E3V2 || HAS_DWIN_E3V3SE
     LSTR MSG_INFO_PRINT_COUNT             = _UxGT("Inprim. Zenbaketa");
     LSTR MSG_INFO_COMPLETED_PRINTS        = _UxGT("Burututa");
     LSTR MSG_INFO_PRINT_TIME              = _UxGT("Inprim. denbora");

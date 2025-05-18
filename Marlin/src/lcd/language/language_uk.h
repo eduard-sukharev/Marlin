@@ -703,7 +703,7 @@ namespace LanguageNarrow_uk {
 
 namespace LanguageWide_uk {
   using namespace LanguageNarrow_uk;
-  #if LCD_WIDTH >= 20 || HAS_DWIN_E3V2
+  #if LCD_WIDTH >= 20 || HAS_DWIN_E3V2 || HAS_DWIN_E3V3SE
     LSTR MSG_MEDIA_INIT_FAIL                = _UxGT("Збій ініціалізації SD");
     LSTR MSG_KILL_SUBCALL_OVERFLOW          = _UxGT("Переповнення виклику");
     LSTR MSG_LCD_SOFT_ENDSTOPS              = _UxGT("Програмні кінцевики");

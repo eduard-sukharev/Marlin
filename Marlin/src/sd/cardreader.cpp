@@ -38,6 +38,8 @@
 
 #if ENABLED(DWIN_CREALITY_LCD)
   #include "../lcd/e3v2/creality/dwin.h"
+#elif ENABLED(DWIN_CREALITY_E3V3SE_LCD)
+  #include "../lcd/e3v3se/creality/dwin.h"
 #elif ENABLED(SOVOL_SV06_RTS)
   #include "../lcd/sovol_rts/sovol_rts.h"
 #endif
@@ -720,6 +722,7 @@ void CardReader::startOrResumeFilePrinting() {
 void CardReader::endFilePrintNow(TERN_(SD_RESORT, const bool re_sort/*=false*/)) {
   TERN_(ADVANCED_PAUSE_FEATURE, did_pause_print = 0);
   TERN_(DWIN_CREALITY_LCD, hmiFlag.print_finish = flag.sdprinting);
+  TERN_(DWIN_CREALITY_E3V3SE_LCD, hmiFlag.print_finish = flag.sdprinting);
   flag.abort_sd_printing = false;
   if (isFileOpen()) myfile.close();
   TERN_(SD_RESORT, if (re_sort) presort());

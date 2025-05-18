@@ -109,7 +109,7 @@ namespace LanguageNarrow_ko_KR {
 
 namespace LanguageWide_ko_KR {
   using namespace LanguageNarrow_ko_KR;
-  #if LCD_WIDTH >= 20 || HAS_DWIN_E3V2
+  #if LCD_WIDTH >= 20 || HAS_DWIN_E3V2 || HAS_DWIN_E3V3SE
   #endif
 }
 

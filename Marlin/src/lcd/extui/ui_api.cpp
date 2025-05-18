@@ -1169,7 +1169,7 @@ namespace ExtUI {
 //
 // MarlinUI passthroughs to ExtUI
 //
-#if DISABLED(HAS_DWIN_E3V2)
+#if NONE(HAS_DWIN_E3V2, HAS_DWIN_E3V3SE)
   void MarlinUI::init_lcd() { ExtUI::onStartup(); }
 
   void MarlinUI::clear_lcd() {}

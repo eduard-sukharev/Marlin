@@ -631,7 +631,7 @@ namespace LanguageNarrow_fr {
 
 namespace LanguageWide_fr {
   using namespace LanguageNarrow_fr;
-  #if LCD_WIDTH >= 20 || HAS_DWIN_E3V2
+  #if LCD_WIDTH >= 20 || HAS_DWIN_E3V2 || HAS_DWIN_E3V3SE
     LSTR MSG_INFO_PRINT_COUNT             = _UxGT("Nbre impressions");
     LSTR MSG_INFO_COMPLETED_PRINTS        = _UxGT("Terminées");
     LSTR MSG_INFO_PRINT_TIME              = _UxGT("Tps impr. total");

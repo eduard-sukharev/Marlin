@@ -111,7 +111,7 @@ void GcodeSuite::M25() {
 
     TERN_(DGUS_LCD_UI_MKS, MKS_pause_print_move());
 
-    IF_DISABLED(DWIN_CREALITY_LCD, ui.reset_status());
+    IF_DISABLED(ALL(DWIN_CREALITY_LCD, DWIN_CREALITY_E3V3SE_LCD), ui.reset_status());
 
     #if ENABLED(HOST_ACTION_COMMANDS)
       TERN_(HOST_PROMPT_SUPPORT, hostui.prompt_open(PROMPT_PAUSE_RESUME, F("Pause SD"), F("Resume")));

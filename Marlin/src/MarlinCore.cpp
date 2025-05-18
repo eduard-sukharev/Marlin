@@ -83,6 +83,12 @@
     #include "lcd/sovol_rts/sovol_rts.h"
   #endif
 #endif
+#if HAS_DWIN_E3V3SE
+  #include "lcd/e3v3se/common/encoder.h"
+  #if ENABLED(DWIN_CREALITY_E3V3SE_LCD)
+    #include "lcd/e3v3se/creality/dwin.h"
+  #endif
+#endif
 
 #if HAS_ETHERNET
   #include "feature/ethernet.h"
@@ -1632,13 +1638,13 @@ void setup() {
     SERIAL_ECHO_TERNARY(err, "BL24CXX Check ", "failed", "succeeded", "!\n");
   #endif
 
-  #if ENABLED(DWIN_CREALITY_LCD)
+  #if ANY(DWIN_CREALITY_LCD, DWIN_CREALITY_E3V3SE_LCD)
     SETUP_RUN(dwinInitScreen());
   #elif ENABLED(SOVOL_SV06_RTS)
     SETUP_RUN(rts.init());
   #endif
 
-  #if HAS_SERVICE_INTERVALS && DISABLED(DWIN_CREALITY_LCD)
+  #if HAS_SERVICE_INTERVALS && NONE(DWIN_CREALITY_LCD, DWIN_CREALITY_E3V3SE_LCD)
     SETUP_RUN(ui.reset_status(true));  // Show service messages or keep current status
   #endif
 

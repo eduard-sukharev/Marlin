@@ -132,7 +132,7 @@ namespace LanguageNarrow_fi {
 
 namespace LanguageWide_fi {
   using namespace LanguageNarrow_fi;
-  #if LCD_WIDTH >= 20 || HAS_DWIN_E3V2
+  #if LCD_WIDTH >= 20 || HAS_DWIN_E3V2 || HAS_DWIN_E3V3SE
   #endif
 }
 

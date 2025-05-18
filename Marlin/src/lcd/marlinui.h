@@ -49,6 +49,8 @@
 
 #if ENABLED(DWIN_CREALITY_LCD)
   #include "e3v2/creality/dwin.h"
+#elif ENABLED(DWIN_CREALITY_E3V3SE_LCD)
+  #include "e3v3se/creality/dwin.h"
 #elif ENABLED(DWIN_LCD_PROUI)
   #include "e3v2/proui/dwin.h"
 #endif
@@ -249,7 +251,7 @@ public:
     }
   #endif
 
-  #if (HAS_WIRED_LCD && HAS_ENCODER_ACTION && HAS_MARLINUI_ENCODER) || HAS_DWIN_E3V2 || HAS_TFT_LVGL_UI
+  #if (HAS_WIRED_LCD && HAS_ENCODER_ACTION && HAS_MARLINUI_ENCODER) || HAS_DWIN_E3V2 || HAS_DWIN_E3V3SE || HAS_TFT_LVGL_UI
     #define MARLINUI_ENCODER_DELTA 1
     static int8_t get_encoder_delta(const millis_t &now=millis());
   #endif

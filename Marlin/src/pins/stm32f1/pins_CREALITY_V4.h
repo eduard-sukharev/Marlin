@@ -185,7 +185,7 @@
 #define DEBUG_02_PIN                        PA13
 #define DEBUG_03_PIN                        PA14
 
-#if ANY(RET6_12864_LCD, HAS_DWIN_E3V2, IS_DWIN_MARLINUI)
+#if ANY(RET6_12864_LCD, HAS_DWIN_E3V2, HAS_DWIN_E3V3SE, IS_DWIN_MARLINUI)
 
   /**
    *    RET6 12864 LCD
@@ -261,7 +261,7 @@
     #define BEEPER_PIN               EXP3_01_PIN
   #endif
 
-#elif ANY(HAS_DWIN_E3V2, IS_DWIN_MARLINUI, DWIN_VET6_CREALITY_LCD)
+#elif ANY(HAS_DWIN_E3V2, HAS_DWIN_E3V3SE, IS_DWIN_MARLINUI, DWIN_VET6_CREALITY_LCD)
 
   #define BTN_ENC                    EXP3_05_PIN
   #define BTN_EN1                    EXP3_08_PIN

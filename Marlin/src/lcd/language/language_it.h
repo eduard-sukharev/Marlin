@@ -943,7 +943,7 @@ namespace LanguageNarrow_it {
 
 namespace LanguageWide_it {
   using namespace LanguageNarrow_it;
-  #if LCD_WIDTH >= 20 || HAS_DWIN_E3V2
+  #if LCD_WIDTH >= 20 || HAS_DWIN_E3V2 || HAS_DWIN_E3V3SE
     LSTR MSG_HOST_START_PRINT             = _UxGT("Avvio stampa host");
     LSTR MSG_PRINTING_OBJECT              = _UxGT("Sto stampando l'oggetto");
     LSTR MSG_CANCEL_OBJECT                = _UxGT("Cancella l'oggetto");

@@ -166,7 +166,7 @@ namespace LanguageNarrow_bg {
 
 namespace LanguageWide_bg {
   using namespace LanguageNarrow_bg;
-  #if LCD_WIDTH >= 20 || HAS_DWIN_E3V2
+  #if LCD_WIDTH >= 20 || HAS_DWIN_E3V2 || HAS_DWIN_E3V3SE
   #endif
 }
 

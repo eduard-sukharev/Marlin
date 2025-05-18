@@ -889,7 +889,7 @@ namespace LanguageNarrow_tr {
 
 namespace LanguageWide_tr {
   using namespace LanguageNarrow_tr;
-  #if LCD_WIDTH >= 20 || HAS_DWIN_E3V2
+  #if LCD_WIDTH >= 20 || HAS_DWIN_E3V2 || HAS_DWIN_E3V3SE
     LSTR MSG_LIVE_MOVE                    = _UxGT("Canlı Hareket");
     LSTR MSG_HOST_START_PRINT             = _UxGT("Host Baskıyı başlat");
     LSTR MSG_PRINTING_OBJECT              = _UxGT("Yazdırma Nesnesi");

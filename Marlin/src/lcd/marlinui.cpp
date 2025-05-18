@@ -48,6 +48,8 @@ MarlinUI ui;
 
 #if ENABLED(DWIN_CREALITY_LCD)
   #include "e3v2/creality/dwin.h"
+#elif ENABLED(DWIN_CREALITY_E3V3SE_LCD)
+  #include "e3v3se/creality/dwin.h"
 #elif ENABLED(DWIN_CREALITY_LCD_JYERSUI)
   #include "e3v2/jyersui/dwin.h"
 #elif ENABLED(SOVOL_SV06_RTS)
@@ -1686,6 +1688,7 @@ uint8_t expand_u8str_P(char * const outstr, PGM_P const ptpl, const int8_t ind, 
 
     TERN_(EXTENSIBLE_UI, ExtUI::onStatusChanged(status_message));
     TERN_(DWIN_CREALITY_LCD, dwinStatusChanged(status_message));
+    TERN_(DWIN_CREALITY_E3V3SE_LCD, dwinStatusChanged(status_message));
     TERN_(DWIN_CREALITY_LCD_JYERSUI, jyersDWIN.updateStatus(status_message));
   }
 

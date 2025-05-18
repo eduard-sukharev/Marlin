@@ -218,7 +218,7 @@ namespace LanguageNarrow_el {
 
 namespace LanguageWide_el {
   using namespace LanguageNarrow_el;
-  #if LCD_WIDTH >= 20 || HAS_DWIN_E3V2
+  #if LCD_WIDTH >= 20 || HAS_DWIN_E3V2 || HAS_DWIN_E3V3SE
   #endif
 }
 

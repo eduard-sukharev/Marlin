@@ -311,6 +311,7 @@ void GcodeSuite::dwell(const millis_t time) {
     }
 
     TERN_(HAS_DWIN_E3V2_BASIC, dwinLevelingDone());
+    TERN_(HAS_DWIN_E3V3SE, dwinLevelingDone());
     TERN_(EXTENSIBLE_UI, ExtUI::onLevelingDone());
   }
 

@@ -180,7 +180,7 @@ namespace LanguageNarrow_pt {
 
 namespace LanguageWide_pt {
   using namespace LanguageNarrow_pt;
-  #if LCD_WIDTH >= 20 || HAS_DWIN_E3V2
+  #if LCD_WIDTH >= 20 || HAS_DWIN_E3V2 || HAS_DWIN_E3V3SE
   #endif
 }
 

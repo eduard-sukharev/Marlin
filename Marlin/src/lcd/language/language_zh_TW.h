@@ -468,7 +468,7 @@ namespace LanguageNarrow_zh_TW {
 
 namespace LanguageWide_zh_TW {
   using namespace LanguageNarrow_zh_TW;
-  #if LCD_WIDTH >= 20 || HAS_DWIN_E3V2
+  #if LCD_WIDTH >= 20 || HAS_DWIN_E3V2 || HAS_DWIN_E3V3SE
     LSTR MSG_INFO_PRINT_COUNT             = _UxGT("列印計數"); // "Print Count"
     LSTR MSG_INFO_COMPLETED_PRINTS        = _UxGT("已完成"); // "Completed"
     LSTR MSG_INFO_PRINT_TIME              = _UxGT("總列印時間"); // "Total print time"

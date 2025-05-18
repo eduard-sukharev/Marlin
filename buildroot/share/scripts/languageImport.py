@@ -158,7 +158,7 @@ for i in range(1, numcols):
     # Wide and tall namespaces inherit from the others
     if style == 'Wide':
         f.write('  using namespace LanguageNarrow_%s;\n' % lang)
-        f.write('  #if LCD_WIDTH >= 20 || HAS_DWIN_E3V2\n')
+        f.write('  #if LCD_WIDTH >= 20 || HAS_DWIN_E3V2 || HAS_DWIN_E3V3SE\n')
     elif style == 'Tall':
         f.write('  using namespace LanguageWide_%s;\n' % lang)
         f.write('  #if LCD_HEIGHT >= 4\n')

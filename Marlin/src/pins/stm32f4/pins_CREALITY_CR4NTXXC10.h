@@ -242,7 +242,7 @@
     #define BEEPER_PIN               EXP1_01_PIN
   #endif
 
-#elif ENABLED(DWIN_CREALITY_LCD)
+#elif ANY(DWIN_CREALITY_LCD, DWIN_CREALITY_E3V3SE_LCD)
 
   // DWIN ENCODER LCD
   #define BTN_ENC                    EXP1_05_PIN

@@ -580,7 +580,7 @@ namespace LanguageNarrow_gl {
 
 namespace LanguageWide_gl {
   using namespace LanguageNarrow_gl;
-  #if LCD_WIDTH >= 20 || HAS_DWIN_E3V2
+  #if LCD_WIDTH >= 20 || HAS_DWIN_E3V2 || HAS_DWIN_E3V3SE
     LSTR MSG_INFO_PRINT_COUNT             = _UxGT("Total Impresións");
     LSTR MSG_INFO_COMPLETED_PRINTS        = _UxGT("Completadas");
     LSTR MSG_INFO_PRINT_TIME              = _UxGT("Tempo Total Imp.");

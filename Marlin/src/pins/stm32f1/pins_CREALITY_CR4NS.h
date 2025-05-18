@@ -73,11 +73,17 @@
   #define FIL_RUNOUT_PIN                    PC15  // "Pulled-high"
 #endif
 
+#ifndef CHECK_24V_PIN
+  #define POWER_DETECTION_PIN               PB0   // Detect the ADC input pin of 24V power supply
+#endif
+
 //
 // Heaters / Fans
 //
 #define HEATER_BED_PIN                      PB2   // HOT BED
 #define FAN1_PIN                            PC1   // extruder fan
+
+#define FAN_SOFT_PWM
 
 //
 // Steppers
@@ -95,6 +101,8 @@
   #define Y_DIAG_PIN                        PB11
 
   #define Z_SERIAL_TX_PIN                   PB14
+
+  #define E0_SERIAL_TX_PIN                  PB15
 #endif // HAS_TMC_UART
 
 //
@@ -103,7 +111,7 @@
 #define ONBOARD_SPI_DEVICE                     1  // SPI1
 #define ONBOARD_SD_CS_PIN                   PA4   // SDSS
 
-#if ANY(RET6_12864_LCD, HAS_DWIN_E3V2, IS_DWIN_MARLINUI)
+#if ANY(RET6_12864_LCD, HAS_DWIN_E3V2, HAS_DWIN_E3V3SE, IS_DWIN_MARLINUI)
 
   /**
    *    LCD PIN OUT

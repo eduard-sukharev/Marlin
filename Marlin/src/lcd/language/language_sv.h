@@ -644,7 +644,7 @@ namespace LanguageNarrow_sv {
 
 namespace LanguageWide_sv {
   using namespace LanguageNarrow_sv;
-  #if LCD_WIDTH >= 20 || HAS_DWIN_E3V2
+  #if LCD_WIDTH >= 20 || HAS_DWIN_E3V2 || HAS_DWIN_E3V3SE
     LSTR MSG_INFO_PRINT_COUNT             = _UxGT("Utskriftsantal");
     LSTR MSG_INFO_COMPLETED_PRINTS        = _UxGT("Färdiga");
     LSTR MSG_INFO_PRINT_TIME              = _UxGT("Total Utskriftstid");

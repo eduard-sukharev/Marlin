@@ -543,7 +543,7 @@ namespace LanguageNarrow_cz {
 
 namespace LanguageWide_cz {
   using namespace LanguageNarrow_cz;
-  #if LCD_WIDTH >= 20 || HAS_DWIN_E3V2
+  #if LCD_WIDTH >= 20 || HAS_DWIN_E3V2 || HAS_DWIN_E3V3SE
     LSTR MSG_PROGRESS_BAR_TEST            = _UxGT("Test ukaz. průběhu");
     LSTR MSG_BED_HEATING                  = _UxGT("Zahřívání podložky");
     LSTR MSG_BED_COOLING                  = _UxGT("Chlazení podložky");

@@ -216,7 +216,7 @@ namespace LanguageNarrow_nl {
 
 namespace LanguageWide_nl {
   using namespace LanguageNarrow_nl;
-  #if LCD_WIDTH >= 20 || HAS_DWIN_E3V2
+  #if LCD_WIDTH >= 20 || HAS_DWIN_E3V2 || HAS_DWIN_E3V3SE
     LSTR MSG_INFO_PRINT_COUNT             = _UxGT("Printed Aantal");
     LSTR MSG_INFO_COMPLETED_PRINTS        = _UxGT("Totaal Voltooid");
     LSTR MSG_INFO_PRINT_TIME              = _UxGT("Totale Printtijd");

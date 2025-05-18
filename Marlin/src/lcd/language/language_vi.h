@@ -436,7 +436,7 @@ namespace LanguageNarrow_vi {
 
 namespace LanguageWide_vi {
   using namespace LanguageNarrow_vi;
-  #if LCD_WIDTH >= 20 || HAS_DWIN_E3V2
+  #if LCD_WIDTH >= 20 || HAS_DWIN_E3V2 || HAS_DWIN_E3V3SE
     LSTR MSG_INFO_PRINT_COUNT             = _UxGT("Số In");                               // Print Count
     LSTR MSG_INFO_COMPLETED_PRINTS        = _UxGT("Đã hoàn thành");
     LSTR MSG_INFO_PRINT_TIME              = _UxGT("Tổng số thời gian in");               // Total print time
