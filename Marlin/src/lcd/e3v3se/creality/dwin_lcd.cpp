@@ -36,7 +36,7 @@
 
 #include "dwin_lcd.h"
 
-//#define DEBUG_OUT 1
+#define DEBUG_OUT 1
 #include "../../../core/debug_out.h"
 
 /*-------------------------------------- System variable function --------------------------------------*/
@@ -49,7 +49,10 @@ void dwinStartup() {
   #if DISABLED(SHOW_BOOTSCREEN)
     dwinFrameClear(COLOR_BG_BLACK); // MarlinUI handles the bootscreen so just clear here
   #endif
-  dwinJPGShowAndCache(3);
+
+  #if DISABLED(TJC_DISPLAY)
+    dwinJPGShowAndCache(3);
+  #endif
   dwinUpdateLCD();
 }
 

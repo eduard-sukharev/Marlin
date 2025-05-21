@@ -21,7 +21,7 @@
  */
 #include "../../../inc/MarlinConfigPre.h"
 
-#if HAS_DWIN_E3V3SE || IS_DWIN_MARLINUI
+#if HAS_DWIN_E3V3SE
 
 #include "dwin_api.h"
 #include "dwin_set.h"
@@ -84,8 +84,8 @@ bool dwinHandshake() {
   //  brightness: 0x00-0xFF
   void dwinLCDBrightness(const uint8_t brightness) {
     size_t i = 0;
-    dwinByte(i, 0x30);
-    dwinByte(i, brightness);
+    dwinByte(i, 0x5f);
+    dwinByte(i, brightness); //_MAX(luminance, 0x1F));
     dwinSend(i);
   }
 #endif
@@ -131,12 +131,12 @@ uint8_t fontHeight(uint8_t cfont) {
 // Set screen display direction
 //  dir: 0=0°, 1=90°, 2=180°, 3=270°
 void dwinFrameSetDir(uint8_t dir) {
-  size_t i = 0;
-  dwinByte(i, 0x34);
-  dwinByte(i, 0x5A);
-  dwinByte(i, 0xA5);
-  dwinByte(i, dir);
-  dwinSend(i);
+  // size_t i = 0;
+  // dwinByte(i, 0x34);
+  // dwinByte(i, 0x5A);
+  // dwinByte(i, 0xA5);
+  // dwinByte(i, dir);
+  // dwinSend(i);
 }
 
 // Update display
@@ -157,8 +157,19 @@ void dwinFrameClear(const uint16_t color) {
   dwinSend(i);
 }
 
-#if DISABLED(TJC_DISPLAY)
+// Set foreground and background colors
+//  fColor: Foreground color
+//  bColor: Background color
+void dwinSetColor(uint16_t fColor,uint16_t bColor)
+{
+  size_t i = 0;
+  dwinByte(i, 0x40);
+  dwinWord(i, fColor);
+  dwinWord(i, bColor);
+  dwinSend(i);
+}
 
+#if DISABLED(TJC_DISPLAY)
   // Draw a point
   //  color: point color
   //  width: point width   0x01-0x0F
@@ -166,8 +177,8 @@ void dwinFrameClear(const uint16_t color) {
   //  x,y: upper left point
   void dwinDrawPoint(uint16_t color, uint8_t width, uint8_t height, uint16_t x, uint16_t y) {
     size_t i = 0;
+    dwinSetColor(color);
     dwinByte(i, 0x02);
-    dwinWord(i, color);
     dwinByte(i, width);
     dwinByte(i, height);
     dwinWord(i, x);
@@ -242,8 +253,8 @@ void dwinFrameClear(const uint16_t color) {
 //  xEnd/yEnd: End point
 void dwinDrawLine(uint16_t color, uint16_t xStart, uint16_t yStart, uint16_t xEnd, uint16_t yEnd) {
   size_t i = 0;
-  dwinByte(i, 0x03);
-  dwinWord(i, color);
+  dwinSetColor(color, 0xffff);
+  dwinByte(i, 0x56);
   dwinWord(i, xStart);
   dwinWord(i, yStart);
   dwinWord(i, xEnd);
@@ -258,9 +269,29 @@ void dwinDrawLine(uint16_t color, uint16_t xStart, uint16_t yStart, uint16_t xEn
 //  xEnd/yEnd: lower right point
 void dwinDrawRectangle(uint8_t mode, uint16_t color, uint16_t xStart, uint16_t yStart, uint16_t xEnd, uint16_t yEnd) {
   size_t i = 0;
-  dwinByte(i, 0x05);
-  dwinByte(i, mode);
-  dwinWord(i, color);
+  uint8_t modeCmd = 0;
+  switch (mode)
+  {
+    case 0:
+      modeCmd = 0x59;
+      break;
+     case 1:
+      modeCmd = 0x5B;
+      break;
+     case 2:
+      modeCmd = 0x69;
+      break;
+     case 3:
+      modeCmd = 0x5A;
+      break;
+    default:
+      break;
+  }
+  if(xEnd >= DWIN_WIDTH)
+    xEnd = DWIN_WIDTH - 1;
+
+  dwinSetColor(color, 0xffff);
+  dwinByte(i, modeCmd);
   dwinWord(i, xStart);
   dwinWord(i, yStart);
   dwinWord(i, xEnd);
@@ -304,7 +335,9 @@ void dwinDrawString(bool bShow, uint8_t size, uint16_t color, uint16_t bColor, u
   TERN_(DWIN_CREALITY_E3V3SE_LCD, dwinDrawRectangle(1, bColor, x, y, x + (fontWidth(size) * strlen_P(string)), y + fontHeight(size)));
   constexpr uint8_t widthAdjust = 0;
   size_t i = 0;
-  dwinByte(i, 0x11);
+  dwinByte(i, 0x98);
+  dwinWord(i, x);
+  dwinWord(i, y);
   // Bit 7: widthAdjust
   // Bit 6: bShow
   // Bit 5-4: Unused (0)
@@ -312,8 +345,6 @@ void dwinDrawString(bool bShow, uint8_t size, uint16_t color, uint16_t bColor, u
   dwinByte(i, (widthAdjust * 0x80) | (bShow * 0x40) | size);
   dwinWord(i, color);
   dwinWord(i, bColor);
-  dwinWord(i, x);
-  dwinWord(i, y);
   dwinText(i, string, rlimit);
   dwinSend(i);
 }
@@ -329,12 +360,9 @@ void dwinDrawString(bool bShow, uint8_t size, uint16_t color, uint16_t bColor, u
 //  x/y: Upper-left coordinate
 //  value: Integer value
 void dwinDrawIntValue(uint8_t bShow, bool zeroFill, uint8_t zeroMode, uint8_t size, uint16_t color,
-                          uint16_t bColor, uint8_t iNum, uint16_t x, uint16_t y, uint32_t value) {
+                          uint16_t bColor, uint8_t iNum, uint16_t x, uint16_t y, uint32_t value, bool headSpace) {
   size_t i = 0;
-  #if DISABLED(DWIN_CREALITY_LCD_JYERSUI)
-    dwinDrawRectangle(1, bColor, x, y, x + fontWidth(size) * iNum + 1, y + fontHeight(size));
-  #endif
-  dwinByte(i, 0x14);
+  dwinByte(i, headSpace ? 0x14 : 0x15);
   // Bit 7: bshow
   // Bit 6: 1 = signed; 0 = unsigned number;
   // Bit 5: zeroFill
@@ -393,12 +421,6 @@ void dwinDrawFloatValue(uint8_t bShow, bool zeroFill, uint8_t zeroMode, uint8_t 
   dwinWord(i, x);
   dwinWord(i, y);
   dwinLong(i, value);
-  /*
-  dwinByte(i, fvalue[3]);
-  dwinByte(i, fvalue[2]);
-  dwinByte(i, fvalue[1]);
-  dwinByte(i, fvalue[0]);
-  */
   dwinSend(i);
 }
 
@@ -412,14 +434,17 @@ void dwinDrawFloatValue(uint8_t bShow, bool zeroFill, uint8_t zeroMode, uint8_t 
 
 /*---------------------------------------- Picture related functions ----------------------------------------*/
 
+// Not supported by TJC screen found on Ender-3 V3 SE
 // Draw JPG and cached in #0 virtual display area
 //  id: Picture ID
+#if DISABLED(TJC_DISPLAY)
 void dwinJPGShowAndCache(const uint8_t id) {
   size_t i = 0;
   dwinWord(i, 0x2200);
   dwinByte(i, id);
   dwinSend(i);     // AA 23 00 00 00 00 08 00 01 02 03 CC 33 C3 3C
 }
+#endif // !TJC_DISPLAY
 
 // Draw an Icon
 //  IBD: The icon background display: 0=Background filtering is not displayed, 1=Background display \\When setting the background filtering not to display, the background must be pure black
@@ -432,42 +457,45 @@ void dwinIconShow(bool IBD, bool BIR, bool BFI, uint8_t libID, uint8_t picID, ui
   NOMORE(x, DWIN_WIDTH - 1);
   NOMORE(y, DWIN_HEIGHT - 1); // -- ozy -- srl
   size_t i = 0;
-  dwinByte(i, 0x23);
+  dwinByte(i, 0x97);
   dwinWord(i, x);
   dwinWord(i, y);
-  dwinByte(i, (IBD << 7) | (BIR << 6) | (BFI << 5) | libID);
+  dwinByte(i, libID);
+  dwinByte(i, (IBD << 7) | (BIR << 6) | (BFI << 5)); // ???
   dwinByte(i, picID);
   dwinSend(i);
 }
 
-// Draw an Icon from SRAM
-//  IBD: The icon background display: 0=Background filtering is not displayed, 1=Background display \\When setting the background filtering not to display, the background must be pure black
-//  BIR: Background image restoration: 0=Background image is not restored, 1=Automatically use virtual display area image for background restoration
-//  BFI: Background filtering strength: 0=normal, 1=enhanced, (only valid when the icon background display=0)
-//  x/y: Upper-left point
-//  addr: SRAM address
-void dwinIconShow(bool IBD, bool BIR, bool BFI, uint16_t x, uint16_t y, uint16_t addr) {
-  NOMORE(x, DWIN_WIDTH - 1);
-  NOMORE(y, DWIN_HEIGHT - 1); // -- ozy -- srl
-  size_t i = 0;
-  dwinByte(i, 0x24);
-  dwinWord(i, x);
-  dwinWord(i, y);
-  dwinByte(i, (IBD << 7) | (BIR << 6) | (BFI << 5) | 0x00);
-  dwinWord(i, addr);
-  dwinSend(i);
-}
+#if DISABLED(TJC_DISPLAY)
+  // Draw an Icon from SRAM
+  //  IBD: The icon background display: 0=Background filtering is not displayed, 1=Background display \\When setting the background filtering not to display, the background must be pure black
+  //  BIR: Background image restoration: 0=Background image is not restored, 1=Automatically use virtual display area image for background restoration
+  //  BFI: Background filtering strength: 0=normal, 1=enhanced, (only valid when the icon background display=0)
+  //  x/y: Upper-left point
+  //  addr: SRAM address
+  void dwinIconShow(bool IBD, bool BIR, bool BFI, uint16_t x, uint16_t y, uint16_t addr) {
+    NOMORE(x, DWIN_WIDTH - 1);
+    NOMORE(y, DWIN_HEIGHT - 1); // -- ozy -- srl
+    size_t i = 0;
+    dwinByte(i, 0x97);
+    dwinWord(i, x);
+    dwinWord(i, y);
+    dwinByte(i, (IBD << 7) | (BIR << 6) | (BFI << 5) | 0x00);
+    dwinWord(i, addr);
+    dwinSend(i);
+  }
 
-// Unzip the JPG picture to a virtual display area
-//  n: Cache index
-//  id: Picture ID
-void dwinJPGCacheToN(uint8_t n, uint8_t id) {
-  size_t i = 0;
-  dwinByte(i, 0x25);
-  dwinByte(i, n);
-  dwinByte(i, id);
-  dwinSend(i);
-}
+  // Unzip the JPG picture to a virtual display area
+  //  n: Cache index
+  //  id: Picture ID
+  void dwinJPGCacheToN(uint8_t n, uint8_t id) {
+    size_t i = 0;
+    dwinByte(i, 0x25);
+    dwinByte(i, n);
+    dwinByte(i, id);
+    dwinSend(i);
+  }
+#endif // !TJC_DISPLAY
 
 // Animate a series of icons
 //  animID: Animation ID; 0x00-0x0F
@@ -500,7 +528,7 @@ void dwinIconAnimation(uint8_t animID, bool animate, uint8_t libID, uint8_t picI
 //  state: 16 bits, each bit is the state of an animation id
 void dwinIconAnimationControl(uint16_t state) {
   size_t i = 0;
-  dwinByte(i, 0x29);
+  dwinByte(i, 0x28);
   dwinWord(i, state);
   dwinSend(i);
 }
@@ -537,4 +565,4 @@ void dwinIconAnimationControl(uint16_t state) {
 //
 //  Flash writing returns 0xA5 0x4F 0x4B
 
-#endif // HAS_DWIN_E3V3SE || IS_DWIN_MARLINUI
+#endif // HAS_DWIN_E3V3SE

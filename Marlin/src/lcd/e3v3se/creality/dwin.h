@@ -217,7 +217,9 @@ void hmiMaxJerkXYZE();
   void hmiStepXYZE();
 #endif
 
-void hmiSetLanguageCache();
+#if DISABLED(TJC_DISPLAY)
+  void hmiSetLanguageCache();
+#endif
 
 void updateVariable();
 void dwinDrawSignedFloat(uint8_t size, uint16_t bColor, uint8_t iNum, uint8_t fNum, uint16_t x, uint16_t y, long value);

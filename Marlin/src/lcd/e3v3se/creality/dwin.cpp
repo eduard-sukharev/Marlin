@@ -189,20 +189,28 @@ static uint16_t _remain_time = 0;
 
 inline bool hmiIsChinese() { return hmiFlag.language == DWIN_CHINESE; }
 
+#if DISABLED(TJC_DISPLAY)
 void hmiSetLanguageCache() {
   dwinJPGCacheTo1(hmiIsChinese() ? Language_Chinese : Language_English);
 }
+#endif // !TJC_DISPLAY
 
 void hmiSetLanguage() {
   #if ALL(EEPROM_SETTINGS, IIC_BL24CXX_EEPROM)
     BL24CXX::read(DWIN_LANGUAGE_EEPROM_ADDRESS, (uint8_t*)&hmiFlag.language, sizeof(hmiFlag.language));
   #endif
-  hmiSetLanguageCache();
+
+  #if DISABLED(TJC_DISPLAY)
+    hmiSetLanguageCache();
+  #endif
 }
 
 void hmiToggleLanguage() {
   hmiFlag.language = hmiIsChinese() ? DWIN_ENGLISH : DWIN_CHINESE;
-  hmiSetLanguageCache();
+
+  #if DISABLED(TJC_DISPLAY)
+    hmiSetLanguageCache();
+  #endif
   #if ALL(EEPROM_SETTINGS, IIC_BL24CXX_EEPROM)
     BL24CXX::write(DWIN_LANGUAGE_EEPROM_ADDRESS, (uint8_t*)&hmiFlag.language, sizeof(hmiFlag.language));
   #endif
@@ -4108,7 +4116,9 @@ void hmiInit() {
 
 void dwinInitScreen() {
   hmiInit();
-  hmiSetLanguageCache();
+  #if DISABLED(TJC_DISPLAY)
+    hmiSetLanguageCache();
+  #endif
   hmiStartFrame(true);
 }
 

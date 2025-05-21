@@ -493,6 +493,7 @@
  */
 #if ANY(DWIN_CREALITY_E3V3SE_LCD)
   #define HAS_DWIN_E3V3SE 1
+  #define TJC_DISPLAY
   #define STD_ENCODER_PULSES_PER_STEP 4
 #endif
 

@@ -30,11 +30,11 @@
 //
 
 #if ENABLED(DWIN_MARLINUI_LANDSCAPE)
-  #define DWIN_WIDTH  480
-  #define DWIN_HEIGHT 272
+  #define DWIN_WIDTH  320
+  #define DWIN_HEIGHT 240
 #else
-  #define DWIN_WIDTH  272
-  #define DWIN_HEIGHT 480
+  #define DWIN_WIDTH  240
+  #define DWIN_HEIGHT 320
 #endif
 
 #define RECEIVED_NO_DATA         0x00
@@ -224,8 +224,9 @@ inline void dwinDrawString(bool bShow, uint8_t size, uint16_t color, uint16_t bC
 //  iNum: Number of digits
 //  x/y: Upper-left coordinate
 //  value: Integer value
+//  headSpace: Add leading space
 void dwinDrawIntValue(uint8_t bShow, bool zeroFill, uint8_t zeroMode, uint8_t size, uint16_t color,
-                          uint16_t bColor, uint8_t iNum, uint16_t x, uint16_t y, uint32_t value);
+                          uint16_t bColor, uint8_t iNum, uint16_t x, uint16_t y, uint32_t value, bool headSpace = true);
 
 // Draw a floating point number
 //  bShow: true=display background color; false=don't display background color
@@ -248,9 +249,11 @@ void dwinDrawFloatValue(uint8_t bShow, bool zeroFill, uint8_t zeroMode, uint8_t 
 
 /*---------------------------------------- Picture related functions ----------------------------------------*/
 
-// Draw JPG and cached in #0 virtual display area
-//  id: Picture ID
-void dwinJPGShowAndCache(const uint8_t id);
+#if DISABLED(TJC_DISPLAY)
+  // Draw JPG and cached in #0 virtual display area
+  //  id: Picture ID
+  void dwinJPGShowAndCache(const uint8_t id);
+#endif
 
 // Draw an Icon
 //  libID: Icon library ID
@@ -267,22 +270,24 @@ void dwinIconShow(uint8_t libID, uint8_t picID, uint16_t x, uint16_t y);
 //  x/y: Upper-left point
 void dwinIconShow(bool IBD, bool BIR, bool BFI, uint8_t libID, uint8_t picID, uint16_t x, uint16_t y);
 
-// Draw an Icon from SRAM
-//  IBD: The icon background display: 0=Background filtering is not displayed, 1=Background display \\When setting the background filtering not to display, the background must be pure black
-//  BIR: Background image restoration: 0=Background image is not restored, 1=Automatically use virtual display area image for background restoration
-//  BFI: Background filtering strength: 0=normal, 1=enhanced, (only valid when the icon background display=0)
-//  x/y: Upper-left point
-//  addr: SRAM address
-void dwinIconShow(bool IBD, bool BIR, bool BFI, uint16_t x, uint16_t y, uint16_t addr);
+#if DISABLED(TJC_DISPLAY)
+  // Draw an Icon from SRAM
+  //  IBD: The icon background display: 0=Background filtering is not displayed, 1=Background display \\When setting the background filtering not to display, the background must be pure black
+  //  BIR: Background image restoration: 0=Background image is not restored, 1=Automatically use virtual display area image for background restoration
+  //  BFI: Background filtering strength: 0=normal, 1=enhanced, (only valid when the icon background display=0)
+  //  x/y: Upper-left point
+  //  addr: SRAM address
+  void dwinIconShow(bool IBD, bool BIR, bool BFI, uint16_t x, uint16_t y, uint16_t addr);
 
-// Unzip the JPG picture to a virtual display area
-//  n: Cache index
-//  id: Picture ID
-void dwinJPGCacheToN(uint8_t n, uint8_t id);
+  // Unzip the JPG picture to a virtual display area
+  //  n: Cache index
+  //  id: Picture ID
+  void dwinJPGCacheToN(uint8_t n, uint8_t id);
 
-// Unzip the JPG picture to virtual display area #1
-//  id: Picture ID
-inline void dwinJPGCacheTo1(uint8_t id) { dwinJPGCacheToN(1, id); }
+  // Unzip the JPG picture to virtual display area #1
+  //  id: Picture ID
+  inline void dwinJPGCacheTo1(uint8_t id) { dwinJPGCacheToN(1, id); }
+#endif // !TJC_DISPLAY
 
 // Animate a series of icons
 //  animID: Animation ID  up to 16
