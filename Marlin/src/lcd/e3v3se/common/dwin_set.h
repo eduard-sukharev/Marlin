@@ -21,7 +21,7 @@
  */
 #pragma once
 
-// Picture ID
+// Picture LibID
 #define Language_English    1
 #define Language_Chinese    2
 
@@ -31,15 +31,18 @@
   #define CORP_WEBSITE WEBSITE_URL
 #endif
 
+// 96x14
 #define ICON_LOGO                0
+// 102x115
 #define ICON_Print_0             1
 #define ICON_Print_1             2
 #define ICON_Prepare_0           3
 #define ICON_Prepare_1           4
-#define ICON_Control_0           5
-#define ICON_Control_1           6
+#define ICON_Control_0           5 // ✜
+#define ICON_Control_1           6 // ✜ hover
 #define ICON_Leveling_0          7
 #define ICON_Leveling_1          8
+// 20x20
 #define ICON_HotendTemp          9
 #define ICON_BedTemp            10
 #define ICON_Speed              11
@@ -48,6 +51,7 @@
 #define ICON_File               14
 #define ICON_PrintTime          15
 #define ICON_RemainTime         16
+// 68x64
 #define ICON_Setup_0            17
 #define ICON_Setup_1            18
 #define ICON_Pause_0            19
@@ -56,7 +60,8 @@
 #define ICON_Continue_1         22
 #define ICON_Stop_0             23
 #define ICON_Stop_1             24
-#define ICON_Bar                25
+
+// 20x20
 #define ICON_More               26
 
 #define ICON_Axis               27
@@ -64,7 +69,7 @@
 #define ICON_Homing             29
 #define ICON_SetHome            30
 #define ICON_PLAPreheat         31
-#define ICON_ABSPreheat         32
+#define ICON_ABSPreheat         32 // TPU
 #define ICON_Cool               33
 #define ICON_Language           34
 
@@ -72,6 +77,8 @@
 #define ICON_MoveY              36
 #define ICON_MoveZ              37
 #define ICON_Extruder           38
+
+#define ICON_UpDown             39 // ↕
 
 #define ICON_Temperature        40
 #define ICON_Motion             41
@@ -84,7 +91,7 @@
 #define ICON_SetBedTemp         47
 #define ICON_FanSpeed           48
 #define ICON_SetPLAPreheat      49
-#define ICON_SetABSPreheat      50
+#define ICON_SetABSPreheat      50 // TPU
 
 #define ICON_MaxSpeed           51
 #define ICON_MaxAccelerated     52
@@ -112,29 +119,66 @@
 #define ICON_StepE              74
 #define ICON_Setspeed           75
 #define ICON_SetZOffset         76
-#define ICON_Rectangle          77
-#define ICON_BLTouch            78
+
+// 78x78
+#define ICON_NozzleToBed        78
 #define ICON_TempTooLow         79
-#define ICON_AutoLeveling       80
+// #define ICON_AutoLeveling       80
 #define ICON_TempTooHigh        81
-#define ICON_NoTips_C           82
-#define ICON_NoTips_E           83
-#define ICON_Continue_C         84
-#define ICON_Continue_E         85
-#define ICON_Cancel_C           86
-#define ICON_Cancel_E           87
-#define ICON_Confirm_C          88
-#define ICON_Confirm_E          89
-#define ICON_Info_0             90
-#define ICON_Info_1             91
 
-// Extra Icons
-#define ICON_Printer_0         93
-#define ICON_Box              200
-#define ICON_Checkbox         201
-#define ICON_Probe            206
+// 20x20
+#define ICON_Cabinet            82
 
-#define ICON_Folder       ICON_More
+// 68x68
+#define ICON_NozzleToBedError   83
+#define ICON_NozzleError        84
+
+// 20x20
+#define ICON_PIDSettings        95
+#define ICON_PIDAutoTune        96
+#define ICON_EditManually       97
+#define ICON_PID_NozzleP       100
+#define ICON_PID_NozzleI       101
+#define ICON_PID_NozzleD       102
+#define ICON_PID_BedP          103
+#define ICON_PID_BedI          104
+#define ICON_PID_BedD          105
+#define ICON_PIDAutoTune_Nozzle 106
+#define ICON_PIDAutoTune_Bed   107
+#define ICON_NozzleOffset      108
+#define ICON_Nozzle_Up         166
+#define ICON_Nozzle_Down       167
+
+// 124x124
+#define ICON_QR_BedLevel_Help_CN 98
+#define ICON_QR_BedLevel_Help_EN 99
+
+// 140x140
+#define ICON_Instruction_CutFilament45 168
+#define ICON_Instruction_PushFilament  169
+#define ICON_Instruction_FilamentLoads 170
+#define ICON_Instruction_PullFilament  171
+
+// 36x36
+#define ICON_NozzleOffset_0      172
+#define ICON_NozzleOffset_1      173
+#define ICON_NozzleProbe_0       174
+#define ICON_NozzleProbe_1       175
+#define ICON_NozzleClear_0       176
+#define ICON_NozzleClear_1       177
+
+// 18x18
+#define ICON_DottedLine          178
+
+// 36x21
+#define ICON_LabelOff            179
+#define ICON_LabelOn             180
+
+// 96x96
+#define ICON_EnderMan            143
+
+// Custom
+#define ICON_Folder       ICON_Cabinet
 #define ICON_AdvSet       ICON_Language
 #define ICON_HomeOffset   ICON_PrintSize
 #define ICON_HomeOffsetX  ICON_StepX
@@ -144,8 +188,8 @@
 #define ICON_ProbeOffsetX ICON_StepX
 #define ICON_ProbeOffsetY ICON_StepY
 #define ICON_ProbeOffsetZ ICON_StepZ
-#define ICON_PIDNozzle    ICON_HotendTemp
-#define ICON_PIDBed       ICON_BedTemp
+#define ICON_PIDNozzle    ICON_PIDAutoTune_Nozzle
+#define ICON_PIDBed       ICON_PIDAutoTune_Bed
 #define ICON_FWRetract    ICON_StepE
 #define ICON_FWRetLength  ICON_StepE
 #define ICON_FWRetSpeed   ICON_Setspeed
@@ -153,30 +197,13 @@
 #define ICON_FWRecSpeed   ICON_Setspeed
 #define ICON_FWRecExtra   ICON_StepE
 
-#if DISABLED(DWIN_CREALITY_LCD_STD_ICONS)
-  // Index of custom icons should be >= CUSTOM_ICON_START
-  #define CUSTOM_ICON_START         200
-  #define ICON_Checkbox_F           ICON_Box
-  #define ICON_Checkbox_T           ICON_Checkbox
-  #define ICON_Fade                 202
-  #define ICON_Mesh                 203
-  #define ICON_Tilt                 204
-  #define ICON_Brightness           205
-  #define ICON_AxisD                249
-  #define ICON_AxisBR               250
-  #define ICON_AxisTR               251
-  #define ICON_AxisBL               252
-  #define ICON_AxisTL               253
-  #define ICON_AxisC                254
-#else
-  #define ICON_Fade                 ICON_Version
-  #define ICON_Mesh                 ICON_Version
-  #define ICON_Tilt                 ICON_Version
-  #define ICON_Brightness           ICON_Version
-  #define ICON_AxisD                ICON_Axis
-  #define ICON_AxisBR               ICON_Axis
-  #define ICON_AxisTR               ICON_Axis
-  #define ICON_AxisBL               ICON_Axis
-  #define ICON_AxisTL               ICON_Axis
-  #define ICON_AxisC                ICON_Axis
-#endif
+#define ICON_Fade                 ICON_Version
+#define ICON_Mesh                 ICON_Version
+#define ICON_Tilt                 ICON_Version
+#define ICON_Brightness           ICON_Version
+#define ICON_AxisD                ICON_Axis
+#define ICON_AxisBR               ICON_Axis
+#define ICON_AxisTR               ICON_Axis
+#define ICON_AxisBL               ICON_Axis
+#define ICON_AxisTL               ICON_Axis
+#define ICON_AxisC                ICON_Axis

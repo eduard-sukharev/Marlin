@@ -230,7 +230,7 @@ void iconButton(const bool here, const int iconid, const icon_info_t &ico, const
 // Main Menu: "Print"
 //
 void iconPrint() {
-  constexpr icon_info_t ico = { 17, 110, 110, 100 };
+  constexpr icon_info_t ico = { 17, 110, 102, 115 };
   constexpr text_info_t txt[2] = {
     { 1, { 417, 449 }, 30, 14 },
     { 1, { 405, 447 }, 27, 15 }
@@ -242,7 +242,7 @@ void iconPrint() {
 // Main Menu: "Prepare"
 //
 void iconPrepare() {
-  constexpr icon_info_t ico = { 145, 110, 110, 100 };
+  constexpr icon_info_t ico = { 145, 110, 102, 115 };
   constexpr text_info_t txt[2] = {
     { 33, { 417, 449 }, 51, 14 },
     { 31, { 405, 447 }, 27, 15 }
@@ -254,7 +254,7 @@ void iconPrepare() {
 // Main Menu: "Control"
 //
 void iconControl() {
-  constexpr icon_info_t ico = { 17, 226, 110, 100 };
+  constexpr icon_info_t ico = { 17, 226, 102, 115 };
   constexpr text_info_t txt[2] = {
     { 85, { 417, 449 }, 46, 14 },
     { 61, { 405, 447 }, 27, 15 }
@@ -266,7 +266,7 @@ void iconControl() {
 // Main Menu: "Info"
 //
 void iconStartInfo() {
-  constexpr icon_info_t ico = { 145, 226, 110, 100 };
+  constexpr icon_info_t ico = { 145, 226, 102, 115 };
   constexpr text_info_t txt[2] = {
     { 133, { 417, 449 }, 23, 14 },
     {  91, { 405, 447 }, 27, 15 }
@@ -278,7 +278,7 @@ void iconStartInfo() {
 // Main Menu: "Level"
 //
 void iconLeveling() {
-  constexpr icon_info_t ico = { 145, 226, 110, 100 };
+  constexpr icon_info_t ico = { 145, 226, 102, 115 };
   constexpr text_info_t txt[2] = {
     {  88, { 433, 464 }, 36, 14 },
     { 211, { 405, 447 }, 27, 15 }
@@ -290,7 +290,7 @@ void iconLeveling() {
 // Printing: "Tune"
 //
 void iconTune() {
-  constexpr icon_info_t ico = { 8, 232, 80, 100 };
+  constexpr icon_info_t ico = { 8, 232, 68, 64 };
   constexpr text_info_t txt[2] = {
     {   0, { 433, 464 }, 32, 14 },
     { 121, { 405, 447 }, 27, 15 }
@@ -302,7 +302,7 @@ void iconTune() {
 // Printing: "Pause"
 //
 void iconPause() {
-  constexpr icon_info_t ico = { 96, 232, 80, 100 };
+  constexpr icon_info_t ico = { 96, 232, 68, 64 };
   constexpr text_info_t txt[2] = {
     { 157, { 417, 449 }, 39, 14 },
     { 181, { 405, 447 }, 27, 15 }
@@ -314,7 +314,7 @@ void iconPause() {
 // Printing: "Resume"
 //
 void iconResume() {
-  constexpr icon_info_t ico = { 96, 232, 80, 100 };
+  constexpr icon_info_t ico = { 96, 232, 68, 64 };
   constexpr text_info_t txt[2] = {
     { 33, { 433, 464 }, 53, 14 },
     {  1, { 405, 447 }, 27, 15 }
@@ -333,7 +333,7 @@ void iconResumeOrPause() {
 // Printing: "Stop"
 //
 void iconStop() {
-  constexpr icon_info_t ico = { 184, 232, 80, 100 };
+  constexpr icon_info_t ico = { 184, 232, 68, 64 };
   constexpr text_info_t txt[2] = {
     { 196, { 417, 449 }, 29, 14 },
     { 151, { 405, 447 }, 27, 12 }
