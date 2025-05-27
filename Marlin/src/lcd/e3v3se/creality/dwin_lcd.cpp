@@ -65,6 +65,21 @@ void dwinStartup() {
 void dwinIconShow(uint8_t libID, uint8_t picID, uint16_t x, uint16_t y) {
   dwinIconShow(true, false, false, libID, picID, x, y);
 }
+// Draw a rectangle button with text
+//  x/y: Upper-left point
+//  w/h: Width/height
+//  caption: button caption
+void dwinDrawButton(uint16_t x, uint16_t y, uint16_t w, uint16_t h, const char * const caption) {
+  dwinDrawRectangle(1, COLOR_ICONBLUE, x, y, x+w, y+h);
+  dwinDrawString(false,
+    font10x20,
+    COLOR_ICONBLUE,
+    COLOR_BG_BLACK,
+    x + w/2 - (strlen(caption) * fontWidth(font10x20) / 2),
+    y + h/2 - fontHeight(font10x20) / 2,
+    caption
+  );
+}
 
 // Copy area from virtual display area to current screen
 //  cacheID: virtual area number

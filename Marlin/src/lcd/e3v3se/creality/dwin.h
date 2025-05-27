@@ -150,8 +150,22 @@ typedef struct {
   } probeOffsScaled;
 } hmi_value_t;
 
-#define DWIN_CHINESE 123
-#define DWIN_ENGLISH 0
+#define DWIN_CHINESE 2
+#define DWIN_ENGLISH 4
+
+enum DC_language{
+  Chinese    = DWIN_CHINESE,
+  English    = DWIN_ENGLISH,
+  German     = 6,
+  Russian    = 9,
+  French     = 12,
+  Turkish    = 15,
+  Spanish    = 17,
+  Italian    = 19,
+  Portuguese = 21,
+  Japanese   = 23,
+  Korean     = 25,
+};
 
 typedef struct {
   uint8_t language;

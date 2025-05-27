@@ -92,8 +92,8 @@
 
 #define PAUSE_HEAT
 
-#define MENU_CHAR_LIMIT  24
-#define STATUS_Y        354
+#define MENU_CHAR_LIMIT  22
+#define STATUS_Y        254
 
 #define FEEDRATE_E      (60)
 
@@ -107,12 +107,12 @@
 
 #define TROWS 6                         // Total rows
 constexpr uint16_t MROWS = TROWS - 1,   // Last Row Index
-                   TITLE_HEIGHT = 30,   // Title bar height
-                   MLINE = 53,          // Menu line height
-                   LBLX = 60,           // Menu item label X
+                   TITLE_HEIGHT = 24,   // Title bar height
+                   MLINE = 36,          // Menu line height
+                   LBLX = 42,           // Menu item label X
                    MENU_CHR_W = 8, STAT_CHR_W = 10;
 
-#define MBASE(L) (49 + MLINE * (L))
+#define MBASE(L) (34 + MLINE * (L))
 #define EBASE(L) (MBASE(L) - 2 * DISABLED(USE_STRING_TITLES))
 
 #define BABY_Z_VAR TERN(HAS_BED_PROBE, probe.offset.z, dwin_zoffset)
@@ -230,7 +230,7 @@ void iconButton(const bool here, const int iconid, const icon_info_t &ico, const
 // Main Menu: "Print"
 //
 void iconPrint() {
-  constexpr icon_info_t ico = { 17, 110, 102, 115 };
+  constexpr icon_info_t ico = { DWIN_MAIN_MENU_H_PADDING, DWIN_MAIN_MENU_TOP_PADDING, 102, 115 };
   constexpr text_info_t txt[2] = {
     { 1, { 417, 449 }, 30, 14 },
     { 1, { 405, 447 }, 27, 15 }
@@ -242,7 +242,7 @@ void iconPrint() {
 // Main Menu: "Prepare"
 //
 void iconPrepare() {
-  constexpr icon_info_t ico = { 145, 110, 102, 115 };
+  constexpr icon_info_t ico = { DWIN_WIDTH - DWIN_MAIN_MENU_H_PADDING - DWIN_MAIN_MENU_ICON_W, DWIN_MAIN_MENU_TOP_PADDING, 102, 115 };
   constexpr text_info_t txt[2] = {
     { 33, { 417, 449 }, 51, 14 },
     { 31, { 405, 447 }, 27, 15 }
@@ -254,7 +254,7 @@ void iconPrepare() {
 // Main Menu: "Control"
 //
 void iconControl() {
-  constexpr icon_info_t ico = { 17, 226, 102, 115 };
+  constexpr icon_info_t ico = { DWIN_MAIN_MENU_H_PADDING, DWIN_MAIN_MENU_TOP_PADDING + DWIN_MAIN_MENU_ICON_H + DWIN_MAIN_MENU_V_PADDING, 102, 115 };
   constexpr text_info_t txt[2] = {
     { 85, { 417, 449 }, 46, 14 },
     { 61, { 405, 447 }, 27, 15 }
@@ -266,19 +266,19 @@ void iconControl() {
 // Main Menu: "Info"
 //
 void iconStartInfo() {
-  constexpr icon_info_t ico = { 145, 226, 102, 115 };
+  constexpr icon_info_t ico = { DWIN_WIDTH - DWIN_MAIN_MENU_H_PADDING - DWIN_MAIN_MENU_ICON_W, DWIN_MAIN_MENU_TOP_PADDING + DWIN_MAIN_MENU_ICON_H + DWIN_MAIN_MENU_V_PADDING, 102, 115 };
   constexpr text_info_t txt[2] = {
     { 133, { 417, 449 }, 23, 14 },
     {  91, { 405, 447 }, 27, 15 }
   };
-  iconButton(select_page.now == PAGE_INFO_LEVELING, ICON_Info_0, ico, txt);
+  iconButton(select_page.now == PAGE_INFO_LEVELING, ICON_Info, ico, txt); // TODO: big info button
 }
 
 //
 // Main Menu: "Level"
 //
 void iconLeveling() {
-  constexpr icon_info_t ico = { 145, 226, 102, 115 };
+  constexpr icon_info_t ico = { DWIN_WIDTH - DWIN_MAIN_MENU_H_PADDING - DWIN_MAIN_MENU_ICON_W, DWIN_MAIN_MENU_TOP_PADDING + DWIN_MAIN_MENU_ICON_H + DWIN_MAIN_MENU_V_PADDING, 102, 115 };
   constexpr text_info_t txt[2] = {
     {  88, { 433, 464 }, 36, 14 },
     { 211, { 405, 447 }, 27, 15 }
@@ -290,7 +290,7 @@ void iconLeveling() {
 // Printing: "Tune"
 //
 void iconTune() {
-  constexpr icon_info_t ico = { 8, 232, 68, 64 };
+  constexpr icon_info_t ico = { DWIN_MAIN_MENU_H_PADDING, 232, 68, 64 };
   constexpr text_info_t txt[2] = {
     {   0, { 433, 464 }, 32, 14 },
     { 121, { 405, 447 }, 27, 15 }
@@ -302,7 +302,7 @@ void iconTune() {
 // Printing: "Pause"
 //
 void iconPause() {
-  constexpr icon_info_t ico = { 96, 232, 68, 64 };
+  constexpr icon_info_t ico = { DWIN_MAIN_MENU_H_PADDING * 2 + DWIN_MAIN_MENU_ICON_W, 232, 68, 64 };
   constexpr text_info_t txt[2] = {
     { 157, { 417, 449 }, 39, 14 },
     { 181, { 405, 447 }, 27, 15 }
@@ -314,7 +314,7 @@ void iconPause() {
 // Printing: "Resume"
 //
 void iconResume() {
-  constexpr icon_info_t ico = { 96, 232, 68, 64 };
+  constexpr icon_info_t ico = { DWIN_MAIN_MENU_H_PADDING * 2 + DWIN_MAIN_MENU_ICON_W, 232, 68, 64 };
   constexpr text_info_t txt[2] = {
     { 33, { 433, 464 }, 53, 14 },
     {  1, { 405, 447 }, 27, 15 }
@@ -333,7 +333,7 @@ void iconResumeOrPause() {
 // Printing: "Stop"
 //
 void iconStop() {
-  constexpr icon_info_t ico = { 184, 232, 68, 64 };
+  constexpr icon_info_t ico = { DWIN_MAIN_MENU_H_PADDING * 3 + DWIN_MAIN_MENU_ICON_W * 2, 232, 68, 64 };
   constexpr text_info_t txt[2] = {
     { 196, { 417, 449 }, 29, 14 },
     { 151, { 405, 447 }, 27, 12 }
@@ -372,16 +372,15 @@ void drawPopupBkgd105() {
 }
 
 void drawMoreIcon(const uint8_t line) {
-  dwinIconShow(ICON, ICON_More, 226, MBASE(line) - 3);
+  dwinIconShow(ICON, ICON_More, DWIN_MENU_ICON_RIGHT_ALIGN_X, MBASE(line) - 3);
 }
 
 void drawMenuCursor(const uint8_t line) {
-  //dwinIconShow(ICON, ICON_Rectangle, 0, MBASE(line) - 18);
-  dwinDrawRectangle(1, COLOR_RECTANGLE, 0, MBASE(line) - 18, 14, MBASE(line + 1) - 20);
+  dwinDrawRectangle(1, COLOR_RECTANGLE, 0, MBASE(line) - (DWIN_MENU_FONT_HEIGHT / 2), DWIN_MAIN_MENU_H_PADDING, MBASE(line + 1) - (DWIN_MENU_LINE_HEIGHT / 2));
 }
 
 void eraseMenuCursor(const uint8_t line) {
-  dwinDrawRectangle(1, COLOR_BG_BLACK, 0, MBASE(line) - 18, 14, MBASE(line + 1) - 20);
+  dwinDrawRectangle(1, COLOR_BG_BLACK, 0, MBASE(line) - (DWIN_MENU_FONT_HEIGHT / 2), DWIN_MAIN_MENU_H_PADDING, MBASE(line + 1) - (DWIN_MENU_LINE_HEIGHT / 2));
 }
 
 void moveHighlight(const int16_t from, const uint16_t newline) {
@@ -391,11 +390,11 @@ void moveHighlight(const int16_t from, const uint16_t newline) {
 
 void addMenuLine() {
   moveHighlight(1, MROWS);
-  dwinDrawLine(COLOR_LINE, 16, MBASE(MROWS + 1) - 20, 256, MBASE(MROWS + 1) - 19);
+  dwinDrawLine(COLOR_LINE, DWIN_MAIN_MENU_H_PADDING, MBASE(MROWS + 1) - (DWIN_MENU_LINE_HEIGHT / 2), (DWIN_WIDTH - DWIN_MENU_FONT_WIDTH), MBASE(MROWS + 1) - (DWIN_MENU_LINE_HEIGHT / 2));
 }
 
 void scrollMenu(const uint8_t dir) {
-  dwinFrameAreaMove(1, dir, MLINE, COLOR_BG_BLACK, 0, 31, DWIN_WIDTH, 349);
+  dwinFrameAreaMove(1, dir, MLINE, COLOR_BG_BLACK, (DWIN_MENU_LINE_HEIGHT / 2) + 1, TITLE_HEIGHT + 1, (DWIN_WIDTH - DWIN_MENU_FONT_WIDTH), DWIN_WIDTH);
   switch (dir) {
     case DWIN_SCROLL_DOWN: moveHighlight(-1, 0); break;
     case DWIN_SCROLL_UP:   addMenuLine(); break;
@@ -407,11 +406,11 @@ inline uint16_t nr_sd_menu_items() {
 }
 
 void eraseMenuText(const uint8_t line) {
-  dwinDrawRectangle(1, COLOR_BG_BLACK, LBLX, MBASE(line) - 14, 271, MBASE(line) + 28);
+  dwinDrawRectangle(1, COLOR_BG_BLACK, LBLX, MBASE(line) - (DWIN_MENU_FONT_HEIGHT / 2), (DWIN_WIDTH - DWIN_MENU_FONT_WIDTH), MBASE(line) + 18);
 }
 
 void drawMenuIcon(const uint8_t line, const uint8_t icon) {
-  dwinIconShow(ICON, icon, 26, MBASE(line) - 3);
+  dwinIconShow(ICON, icon, DWIN_MENU_LINE_HEIGHT, MBASE(line));
 }
 
 void _decorateMenuItem(const uint8_t line, const uint8_t icon, bool more) {
@@ -429,12 +428,12 @@ void drawMenuItem(const uint8_t line, const uint8_t icon=0, FSTR_P const flabel=
 
 void drawMenuLine(const uint8_t line, const uint8_t icon=0, const char * const label=nullptr, bool more=false) {
   drawMenuItem(line, icon, label, more);
-  dwinDrawLine(COLOR_LINE, 16, MBASE(line) + 33, 256, MBASE(line) + 34);
+  dwinDrawLine(COLOR_LINE, 16, MBASE(line) + 26, (DWIN_WIDTH - DWIN_MENU_FONT_WIDTH), MBASE(line) + 26);
 }
 
 void drawMenuLine(const uint8_t line, const uint8_t icon, FSTR_P const flabel, bool more=false) {
   drawMenuItem(line, icon, flabel, more);
-  dwinDrawLine(COLOR_LINE, 16, MBASE(line) + 33, 256, MBASE(line) + 34);
+  dwinDrawLine(COLOR_LINE, 16, MBASE(line) + 26, (DWIN_WIDTH - DWIN_MENU_FONT_WIDTH), MBASE(line) + 26);
 }
 
 void drawCheckboxLine(const uint8_t line, const bool ison) {
@@ -736,7 +735,7 @@ void itemPrepareLang(const uint8_t row) {
       itemAreaCopy(1, 194, 96, 206, row);    // "LCD Language"
     #endif
   }
-  dwinDrawString(false, font8x16, COLOR_WHITE, COLOR_BG_BLACK, 226, EBASE(row), hmiIsChinese() ? F("CN") : F("EN"));
+  dwinDrawString(false, font8x16, COLOR_WHITE, COLOR_BG_BLACK, DWIN_MENU_ICON_RIGHT_ALIGN_X, EBASE(row), hmiIsChinese() ? F("CN") : F("EN"));
   drawMenuIcon(row, ICON_Language);
 }
 
@@ -1102,12 +1101,11 @@ void drawMotionMenu() {
     if (hmiIsChinese()) {
       dwinFrameAreaCopy(1, 103, 371, 136, 386, 69, 240);      // Nozzle Too Cold
       dwinFrameAreaCopy(1, 170, 371, 270, 386, 69 + 33, 240);
-      dwinIconShow(ICON, ICON_Confirm_C, 86, 280);
     }
     else {
       dwinDrawString(true, font8x16, COLOR_POPUP_TEXT, COLOR_BG_WINDOW, 20, 235, F("Nozzle is too cold"));
-      dwinIconShow(ICON, ICON_Confirm_E, 86, 280);
     }
+    dwinIconShow(hmiFlag.language, LANGUAGE_Confirm, DWIN_ONE_BTN_X, 280);
   }
 
 #endif
@@ -1118,22 +1116,20 @@ void popupWindowResume() {
   if (hmiIsChinese()) {
     dwinFrameAreaCopy(1, 160, 338, 235, 354, 98, 135);    // Resume Interrupted Print
     dwinFrameAreaCopy(1, 103, 321, 271, 335, 52, 192);
-    dwinIconShow(ICON, ICON_Cancel_C,    26, 307);
-    dwinIconShow(ICON, ICON_Continue_C, 146, 307);
   }
   else {
     dwinDrawString(true, font8x16, COLOR_POPUP_TEXT, COLOR_BG_WINDOW, (272 - 8 * 14) / 2, 115, F("Continue Print"));
     dwinDrawString(true, font8x16, COLOR_POPUP_TEXT, COLOR_BG_WINDOW, (272 - 8 * 22) / 2, 192, F("It looks like the last"));
     dwinDrawString(true, font8x16, COLOR_POPUP_TEXT, COLOR_BG_WINDOW, (272 - 8 * 21) / 2, 212, F("file was interrupted."));
-    dwinIconShow(ICON, ICON_Cancel_E,    26, 307);
-    dwinIconShow(ICON, ICON_Continue_E, 146, 307);
   }
+  dwinIconShow(hmiFlag.language, LANGUAGE_Cancel, 26, 307);
+  dwinIconShow(hmiFlag.language, LANGUAGE_Confirm, 146, 307);
 }
 
 void popupWindowHome(const bool parking/*=false*/) {
   clearMainWindow();
   drawPopupBkgd60();
-  dwinIconShow(ICON, ICON_Printer_0, 101, 105);
+  dwinIconShow(ICON, ICON_Print_0, 101, 105); // TODO: Printer_0 icon?
   if (hmiIsChinese()) {
     dwinFrameAreaCopy(1, 0, 371, 33, 386, 85, 240);       // Wait for Move to Complete
     dwinFrameAreaCopy(1, 203, 286, 271, 302, 118, 240);
@@ -1150,7 +1146,7 @@ void popupWindowHome(const bool parking/*=false*/) {
   void popupWindowLeveling() {
     clearMainWindow();
     drawPopupBkgd60();
-    dwinIconShow(ICON, ICON_AutoLeveling, 101, 105);
+    dwinIconShow(ICON, ICON_Leveling_0, 101, 105); // TODO: AutoLeveling icon?
     if (hmiIsChinese()) {
       dwinFrameAreaCopy(1, 0, 371, 100, 386, 84, 240);    // Wait for Leveling
       dwinFrameAreaCopy(1, 0, 389, 150, 402, 61, 280);
@@ -1180,14 +1176,14 @@ void popupwindowPauseOrStop() {
          if (select_print.now == PRINT_PAUSE_RESUME) dwinFrameAreaCopy(1, 237, 338, 269, 356, 98, 150); // Pause
     else if (select_print.now == PRINT_STOP) dwinFrameAreaCopy(1, 221, 320, 253, 336, 98, 150);         // Stop
     dwinFrameAreaCopy(1, 220, 304, 264, 319, 130, 150); // Print
-    dwinIconShow(ICON, ICON_Confirm_C, 26, 280);
-    dwinIconShow(ICON, ICON_Cancel_C, 146, 280);
+    dwinDrawButton(DWIN_TWO_BTN_LEFT_X, 280, DWIN_BTN_WIDTH, DWIN_BTN_HEIGHT, F("Confirm"));
+    dwinDrawButton(DWIN_TWO_BTN_RIGHT_X, 280, DWIN_BTN_WIDTH, DWIN_BTN_HEIGHT, F("Cancel"));
   }
   else {
          if (select_print.now == PRINT_PAUSE_RESUME) dwinDrawString(true, font8x16, COLOR_POPUP_TEXT, COLOR_BG_WINDOW, (272 - 8 * 11) / 2, 150, GET_TEXT_F(MSG_PAUSE_PRINT));
     else if (select_print.now == PRINT_STOP) dwinDrawString(true, font8x16, COLOR_POPUP_TEXT, COLOR_BG_WINDOW, (272 - 8 * 10) / 2, 150, GET_TEXT_F(MSG_STOP_PRINT));
-    dwinIconShow(ICON, ICON_Confirm_E, 26, 280);
-    dwinIconShow(ICON, ICON_Cancel_E, 146, 280);
+    dwinDrawButton(DWIN_TWO_BTN_LEFT_X, 280, DWIN_BTN_WIDTH, DWIN_BTN_HEIGHT, F("Confirm"));
+    dwinDrawButton(DWIN_TWO_BTN_RIGHT_X, 280, DWIN_BTN_WIDTH, DWIN_BTN_HEIGHT, F("Cancel"));
   }
   drawSelectHighlight(true);
 }
@@ -1208,8 +1204,9 @@ void drawPrintingScreen() {
 
 void drawPrintProgressBar() {
   constexpr uint16_t y = 93, h = 21;
-  dwinIconShow(ICON, ICON_Bar, 15, 93);
-  dwinDrawRectangle(1, COLOR_BARFILL, 16 + _card_percent * 240 / 100, y, 256, y + h - 1);
+  // dwinIconShow(ICON, ICON_Bar, 15, 93);
+  dwinDrawRectangle(1, COLOR_BG_BLACK, 20, y, 220, y + h - 1);
+  dwinDrawRectangle(1, COLOR_BARFILL, 20 + _card_percent * 200 / 100, y, 220, y + h - 1);
   dwinDrawIntValue(true, true, 0, font8x16, COLOR_PERCENT, COLOR_BG_BLACK, 2, 117, y + 40, _card_percent);
   dwinDrawString(false, font8x16, COLOR_PERCENT, COLOR_BG_BLACK, 133, y + 40, F("%"));
 }
@@ -1266,8 +1263,6 @@ void gotoMainMenu() {
       dwinFrameTitleCopy(0, 2, 40, 11); // "Home"
     #endif
   }
-
-  dwinIconShow(ICON, ICON_LOGO, 71, 52);
 
   iconPrint();
   iconPrepare();
@@ -1858,7 +1853,7 @@ void MarlinUI::update() {
 void MarlinUI::kill_screen(FSTR_P const lcd_error, FSTR_P const) {
   clearMainWindow();
   drawPopupBkgd60();
-  dwinIconShow(ICON, ICON_Printer_0, 101, 105);
+  dwinIconShow(ICON, hmiIsChinese() ? ICON_QR_BedLevel_Help_CN : ICON_QR_BedLevel_Help_EN, 101, 105);
   dwinDrawString(true, font8x16, COLOR_POPUP_TEXT, COLOR_BG_WINDOW, (272 - 8 * 15) / 2, 230, GET_TEXT_F(MSG_PRINTER_KILLED));
   dwinDrawString(true, font8x16, COLOR_POPUP_TEXT, COLOR_BG_WINDOW, (272 - 8 * 20) / 2, 260, GET_TEXT_F(MSG_TURN_OFF));
 }
@@ -4104,11 +4099,17 @@ void hmiStep() {
 void hmiInit() {
   hmiSDCardInit();
 
-  for (uint16_t t = 0; t <= 100; t += 2) {
-    dwinIconShow(ICON, ICON_Bar, 15, 260);
-    dwinDrawRectangle(1, COLOR_BG_BLACK, 15 + t * 242 / 100, 260, 257, 280);
-    dwinUpdateLCD();
-    delay(20);
+  // for (uint16_t t = 0; t <= 100; t += 2) {
+  //   dwinDrawRectangle(1, COLOR_BARFILL, 10, 260, 230, 280);
+  //   dwinDrawRectangle(1, COLOR_BG_BLACK, 10 + t * 220 / 100, 260, 230, 280);
+  //   dwinUpdateLCD();
+  //   delay(20);
+  // }
+  dwinIconShow(AUX_ASSETS, BootAnimation_reset, 0, 25);
+  for (uint16_t t = BootAnimation_min; t <= BootAnimation_max - BootAnimation_min; t++)
+  {
+    dwinIconShow(AUX_ASSETS, BootAnimation_min + t, BootAnimation_X, BootAnimation_Y);
+    delay(30);
   }
 
   hmiSetLanguage();
@@ -4150,7 +4151,7 @@ void eachMomentUpdate() {
 
       // show print done confirm
       dwinDrawRectangle(1, COLOR_BG_BLACK, 0, 250, DWIN_WIDTH - 1, STATUS_Y);
-      dwinIconShow(ICON, hmiIsChinese() ? ICON_Confirm_C : ICON_Confirm_E, 86, 283);
+      dwinIconShow(hmiFlag.language, LANGUAGE_Confirm, DWIN_ONE_BTN_X, 280);
     }
     else if (hmiFlag.pause_flag != printingIsPaused()) {
       // print status update

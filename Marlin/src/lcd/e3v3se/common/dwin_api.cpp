@@ -100,11 +100,16 @@ uint8_t fontWidth(uint8_t cfont) {
       case font28x56: return 28;
       case font32x64: return 32;
     #endif
-    case font8x16 : return 8;
+    case font6x12: return 6;
+    case font8x16: return 8;
     case font10x20: return 10;
     case font12x24: return 12;
     case font14x28: return 14;
     case font16x32: return 16;
+    case font20x40: return 20;
+    case font24x48: return 24;
+    case font28x56: return 28;
+    case font32x64: return 32;
     default: return 0;
   }
 }
@@ -119,11 +124,16 @@ uint8_t fontHeight(uint8_t cfont) {
       case font28x56: return 56;
       case font32x64: return 64;
     #endif
-    case font8x16 : return 16;
+    case font6x12: return 12;
+    case font8x16: return 16;
     case font10x20: return 20;
     case font12x24: return 24;
     case font14x28: return 28;
     case font16x32: return 32;
+    case font20x40: return 40;
+    case font24x48: return 48;
+    case font28x56: return 56;
+    case font32x64: return 64;
     default: return 0;
   }
 }
@@ -461,8 +471,8 @@ void dwinIconShow(bool IBD, bool BIR, bool BFI, uint8_t libID, uint8_t picID, ui
   dwinWord(i, x);
   dwinWord(i, y);
   dwinByte(i, libID);
-  dwinByte(i, (IBD << 7) | (BIR << 6) | (BFI << 5)); // ???
-  dwinByte(i, picID);
+  dwinByte(i, 0x00);
+  dwinWord(i, picID);
   dwinSend(i);
 }
 

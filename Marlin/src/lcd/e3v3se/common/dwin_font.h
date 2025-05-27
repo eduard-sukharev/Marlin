@@ -37,8 +37,13 @@ typedef uint8_t fontid_t;
   #define font28x56 0x08
   #define font32x64 0x09
 #endif
+#define font6x12  0x00
 #define font8x16  0x01
 #define font10x20 0x02
 #define font12x24 0x03
 #define font14x28 0x04
 #define font16x32 0x05
+#define font20x40 0x06
+#define font24x48 0x07
+#define font28x56 0x08
+#define font32x64 0x09

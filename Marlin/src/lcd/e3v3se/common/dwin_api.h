@@ -91,6 +91,12 @@ inline void dwinText(size_t &i, FSTR_P string, uint16_t rlimit=0xFFFF) {
 // Handshake (1: Success, 0: Fail)
 bool dwinHandshake();
 
+// Get font character width
+uint8_t fontWidth(uint8_t cfont);
+
+// Get font character height
+uint8_t fontHeight(uint8_t cfont);
+
 // DWIN startup
 void dwinStartup();
 
